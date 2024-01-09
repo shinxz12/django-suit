@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.utils.safestring import mark_safe
+from django.core.exceptions import FieldDoesNotExist
 try:
     from django.urls import reverse_lazy
 except:
@@ -93,7 +94,7 @@ class RelatedFieldAdmin(admin.ModelAdmin):
         for field_name in self.list_display:
             try:
                 field = model._meta.get_field(field_name)
-            except models.FieldDoesNotExist:
+            except FieldDoesNotExist:
                 continue
 
             if isinstance(field.remote_field, models.ManyToOneRel):
